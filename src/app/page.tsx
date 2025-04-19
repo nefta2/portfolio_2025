@@ -3,8 +3,9 @@ import { Space_Grotesk } from 'next/font/google';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { mix, motion } from 'framer-motion';
+import { animate, mix, motion } from 'framer-motion';
 import { text } from 'stream/consumers';
+import { press } from 'framer-motion';
 
 const spaceGrotesk = Space_Grotesk({
 	weight: '300',
@@ -14,6 +15,7 @@ const spaceGrotesk = Space_Grotesk({
 export default function Home() {
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 	const [cursorVariant, setCursorVairiant] = useState('default');
+	const [showClickText, setShowClickText] = useState(false);
 
 	useEffect(() => {
 		const mouseMove = (e: MouseEvent) => {
@@ -32,8 +34,9 @@ export default function Home() {
 
 	const variants = {
 		default: {
-			x: mousePosition.x - 16,
-			y: mousePosition.y - 16,
+			x: mousePosition.x - 12,
+			y: mousePosition.y - 12,
+			transition: { type: 'linear', duration: 0.05 },
 		},
 		text: {
 			height: 200,
@@ -42,14 +45,41 @@ export default function Home() {
 			y: mousePosition.y - 100,
 			backgroundColor: 'white',
 			mixBlendMode: 'difference',
+			transition: { type: 'spring', stiffness: 500, damping: 28 },
+		},
+		textSmall: {
+			height: 100,
+			width: 100,
+			x: mousePosition.x - 50,
+			y: mousePosition.y - 50,
+			backgroundColor: 'white',
+			zIndex: 1,
+			mixBlendMode: 'difference',
+			transition: { type: 'spring', stiffness: 500, damping: 28 },
 		},
 	};
 
 	const textEnter = () => {
 		setCursorVairiant('text');
 	};
+
+	const textEnterClickable = (isClickable?: boolean) => {
+		setCursorVairiant('default');
+		if (isClickable) {
+			setShowClickText(true);
+		}
+	};
+
 	const textLeave = () => {
 		setCursorVairiant('default');
+		setShowClickText(false);
+	};
+
+	const textEnterSmall = (isClickable?: boolean) => {
+		setCursorVairiant('textSmall');
+		if (isClickable) {
+			setShowClickText(true);
+		}
 	};
 
 	return (
@@ -58,14 +88,41 @@ export default function Home() {
 				className={`${spaceGrotesk.className} w-full flex flex-col  row-start-2 items-center sm:items-start h-full`}
 			>
 				<div className="flex w-full place-content-around text-[56px] h-[50%]">
-					<div className="flex justify-center items-center w-full border-r-[0.5px] border-b-[0.5px] border-r-white border-b-white bg-[url(/meteor.svg)]">
-						(I) about.
+					<div
+						onMouseEnter={() => textEnterClickable(true)}
+						onMouseLeave={textLeave}
+						className="about-image flex justify-center items-center w-full border-r-[0.5px] border-b-[0.5px] border-r-white border-b-white"
+					>
+						<p
+							onMouseEnter={() => textEnterSmall(true)}
+							onMouseLeave={textLeave}
+						>
+							(I) about.
+						</p>
 					</div>
-					<div className="flex w-full justify-center items-center border-r-[0.5px] border-b-[0.5px] border-r-white border-b-white bg-cover bg-center bg-[url(/simple_shiny.svg)]">
-						(II) works.
+					<div
+						onMouseEnter={() => textEnterClickable(true)}
+						onMouseLeave={textLeave}
+						className="works-image flex w-full justify-center items-center border-r-[0.5px] border-b-[0.5px] border-r-white border-b-white"
+					>
+						<p
+							onMouseEnter={() => textEnterSmall(true)}
+							onMouseLeave={textLeave}
+						>
+							(II) works.
+						</p>
 					</div>
-					<div className="flex w-full justify-center items-center border-b-[0.5px] border-b-white bg-[url(/sprinkle.svg)]">
-						(III) contact me.
+					<div
+						onMouseEnter={() => textEnterClickable(true)}
+						onMouseLeave={textLeave}
+						className="flex w-full justify-center items-center border-b-[0.5px] border-b-white bg-[url(/sprinkle.svg)]"
+					>
+						<p
+							onMouseEnter={() => textEnterSmall(true)}
+							onMouseLeave={textLeave}
+						>
+							(III) contact me.
+						</p>
 					</div>
 				</div>
 				<div className="gradient-text h-[85%] flex flex-col justify-end px-[50px] tracking-[25px] text-[178px] leading-[0.95] p-[0px_55px] text-center sm:text-left text-transparent animate-gradient">
@@ -96,7 +153,46 @@ export default function Home() {
 				className="cursor"
 				variants={variants}
 				animate={cursorVariant}
+				onMouseDown={(e: { currentTarget: any }) => {
+					animate(
+						e.currentTarget,
+						{ scale: 0.1 },
+						{ type: 'spring', stiffness: 1000 }
+					);
+				}}
+				onMouseUp={(e: { currentTarget: any }) => {
+					animate(
+						e.currentTarget,
+						{ scale: 5 },
+						{ type: 'spring', stiffness: 500 }
+					);
+				}}
 			/>
+			{showClickText && (
+				<motion.div
+					className={`${spaceGrotesk.className} cursor-text fixed pointer-events-none`}
+					style={{
+						top:
+							cursorVariant === 'default'
+								? mousePosition.y - 5
+								: cursorVariant === 'textSmall'
+								? mousePosition.y - 10
+								: mousePosition.y,
+						left:
+							cursorVariant === 'default'
+								? mousePosition.x + 30
+								: cursorVariant === 'textSmall'
+								? mousePosition.x + 60
+								: mousePosition.x + 100,
+						fontSize: cursorVariant === 'textSmall' ? '20px' : null,
+					}}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+				>
+					Click now!
+				</motion.div>
+			)}
 		</div>
 	);
 }

@@ -1,6 +1,5 @@
 @import 'tailwindcss';
-html,
-body {
+* {
 	cursor: none !important;
 }
 :root {
@@ -63,4 +62,100 @@ body {
 	top: 0;
 	left: 0;
 	pointer-events: none;
+	will-change: transform;
+}
+.cursor-text {
+	border-radius: 50%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	will-change: transform;
+}
+
+.about-image {
+	position: relative;
+	overflow: hidden;
+}
+
+.about-image::before,
+.about-image::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-position: center;
+	background-size: cover;
+	transition: opacity 0.5s ease-out, filter 0.5s ease-out;
+	z-index: 0;
+}
+
+.about-image::before {
+	background-image: url('/meteor.svg');
+	opacity: 1;
+}
+
+.about-image::after {
+	background-image: url('/about-image.jpg');
+	opacity: 0;
+	filter: brightness(50%) blur(1px);
+}
+
+.about-image:hover::before {
+	opacity: 0;
+}
+
+.about-image:hover::after {
+	opacity: 1;
+}
+
+.about-image > * {
+	position: relative;
+	z-index: 1;
+}
+
+/* Make sure text stays above the images */
+.works-image > * {
+	position: relative;
+	z-index: 1;
+}
+
+.works-image {
+	position: relative;
+	overflow: hidden;
+}
+
+.works-image::before,
+.works-image::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-position: center;
+	background-size: cover;
+	transition: opacity 0.5s ease-out, filter 0.5s ease-out;
+	z-index: 0;
+}
+
+.works-image::before {
+	background-image: url('/simple_shiny.svg.svg');
+	opacity: 1;
+}
+
+.works-image::after {
+	background-image: url('/works-image.png');
+	opacity: 0;
+	filter: brightness(50%) blur(1px);
+}
+
+.works-image:hover::before {
+	opacity: 0;
+}
+
+.works-image:hover::after {
+	opacity: 1;
+}
+
+/* Make sure text stays above the images */
+.works-image > * {
+	position: relative;
+	z-index: 1;
 }
