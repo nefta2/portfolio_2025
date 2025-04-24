@@ -1,5 +1,5 @@
 'use client';
-import { Space_Grotesk } from 'next/font/google';
+import { Space_Grotesk, Vast_Shadow } from 'next/font/google';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -14,7 +14,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export default function Home() {
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-	const [cursorVariant, setCursorVairiant] = useState('default');
+	const [cursorVariant, setCursorVariant] = useState('default');
 	const [showClickText, setShowClickText] = useState(false);
 
 	useEffect(() => {
@@ -44,7 +44,7 @@ export default function Home() {
 			x: mousePosition.x - 100,
 			y: mousePosition.y - 100,
 			backgroundColor: 'white',
-			mixBlendMode: 'difference',
+			mixBlendMode: 'difference' as const,
 			transition: { type: 'spring', stiffness: 500, damping: 28 },
 		},
 		textSmall: {
@@ -54,29 +54,33 @@ export default function Home() {
 			y: mousePosition.y - 50,
 			backgroundColor: 'white',
 			zIndex: 1,
-			mixBlendMode: 'difference',
+			mixBlendMode: 'difference' as const,
 			transition: { type: 'spring', stiffness: 500, damping: 28 },
 		},
 	};
 
 	const textEnter = () => {
-		setCursorVairiant('text');
+		setCursorVariant('text');
 	};
 
 	const textEnterClickable = (isClickable?: boolean) => {
-		setCursorVairiant('default');
+		setCursorVariant('default');
 		if (isClickable) {
 			setShowClickText(true);
 		}
 	};
 
-	const textLeave = () => {
-		setCursorVairiant('default');
-		setShowClickText(false);
+	const textLeave = (isClickable?: boolean) => {
+		setCursorVariant('default');
+		if (isClickable) {
+			setShowClickText(true);
+		} else {
+			setShowClickText(false);
+		}
 	};
 
 	const textEnterSmall = (isClickable?: boolean) => {
-		setCursorVairiant('textSmall');
+		setCursorVariant('textSmall');
 		if (isClickable) {
 			setShowClickText(true);
 		}
@@ -90,36 +94,36 @@ export default function Home() {
 				<div className="flex w-full place-content-around text-[56px] h-[50%]">
 					<div
 						onMouseEnter={() => textEnterClickable(true)}
-						onMouseLeave={textLeave}
+						onMouseLeave={() => textLeave(false)}
 						className="about-image flex justify-center items-center w-full border-r-[0.5px] border-b-[0.5px] border-r-white border-b-white"
 					>
 						<p
 							onMouseEnter={() => textEnterSmall(true)}
-							onMouseLeave={textLeave}
+							onMouseLeave={() => textLeave(true)}
 						>
 							(I) about.
 						</p>
 					</div>
 					<div
 						onMouseEnter={() => textEnterClickable(true)}
-						onMouseLeave={textLeave}
+						onMouseLeave={() => textLeave(false)}
 						className="works-image flex w-full justify-center items-center border-r-[0.5px] border-b-[0.5px] border-r-white border-b-white"
 					>
 						<p
 							onMouseEnter={() => textEnterSmall(true)}
-							onMouseLeave={textLeave}
+							onMouseLeave={() => textLeave(true)}
 						>
 							(II) works.
 						</p>
 					</div>
 					<div
 						onMouseEnter={() => textEnterClickable(true)}
-						onMouseLeave={textLeave}
+						onMouseLeave={() => textLeave(false)}
 						className="flex w-full justify-center items-center border-b-[0.5px] border-b-white bg-[url(/sprinkle.svg)]"
 					>
 						<p
 							onMouseEnter={() => textEnterSmall(true)}
-							onMouseLeave={textLeave}
+							onMouseLeave={() => textLeave(true)}
 						>
 							(III) contact me.
 						</p>
@@ -128,21 +132,21 @@ export default function Home() {
 				<div className="gradient-text h-[85%] flex flex-col justify-end px-[50px] tracking-[25px] text-[178px] leading-[0.95] p-[0px_55px] text-center sm:text-left text-transparent animate-gradient">
 					<div
 						onMouseEnter={textEnter}
-						onMouseLeave={textLeave}
+						onMouseLeave={() => textLeave(false)}
 						className="w-max"
 					>
 						ONE
 					</div>
 					<div
 						onMouseEnter={textEnter}
-						onMouseLeave={textLeave}
+						onMouseLeave={() => textLeave(false)}
 						className="w-max"
 					>
 						PORTFOLIO BY
 					</div>
 					<div
 						onMouseEnter={textEnter}
-						onMouseLeave={textLeave}
+						onMouseLeave={() => textLeave(false)}
 						className="w-max"
 					>
 						DIEGO BURGOS.
@@ -184,7 +188,7 @@ export default function Home() {
 								: cursorVariant === 'textSmall'
 								? mousePosition.x + 60
 								: mousePosition.x + 100,
-						fontSize: cursorVariant === 'textSmall' ? '20px' : null,
+						fontSize: cursorVariant === 'textSmall' ? '20px' : undefined,
 					}}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
