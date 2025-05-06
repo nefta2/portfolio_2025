@@ -1,7 +1,5 @@
 @import 'tailwindcss';
-* {
-	cursor: none !important;
-}
+
 :root {
 	--background: #ffffff;
 	--foreground: #171717;
@@ -11,10 +9,11 @@
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--font-sans: var(--font-geist-sans);
-	--font-mono: var(--font-geist-mono);
 }
 
 @theme {
+	--breakpoint-xs: 26rem;
+	--breakpoint-3xl: 101rem;
 	--animate-gradient: gradient 10s linear infinite;
 	@keyframes gradient {
 		0% {
@@ -51,6 +50,7 @@ body {
 	);
 	background-size: 300% 300%;
 	background-clip: text;
+	text-overflow: wrap;
 }
 
 .cursor {
@@ -64,6 +64,7 @@ body {
 	pointer-events: none;
 	will-change: transform;
 }
+
 .cursor-text {
 	border-radius: 50%;
 	position: fixed;
@@ -95,9 +96,9 @@ body {
 }
 
 .about-image::after {
-	background-image: url('/about-image.jpg');
+	background-image: url('/about-image.JPG');
 	opacity: 0;
-	filter: brightness(50%) blur(1px);
+	filter: brightness(50%) blur(0.5px);
 }
 
 .about-image:hover::before {

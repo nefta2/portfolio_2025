@@ -1,0 +1,39 @@
+.nav-link {
+	position: relative;
+}
+
+.nav-link::after {
+	content: '';
+	height: 1px;
+	position: absolute;
+	bottom: 3px;
+	right: 0;
+	width: 0;
+	transition: width 0.2s;
+	background-color: white;
+}
+
+.nav-link:hover::after {
+	width: 100%;
+	left: 0;
+}
+
+.nav-link-db {
+	position: relative;
+}
+
+.nav-link-db::after {
+	content: '';
+	height: 1px;
+	position: absolute;
+	bottom: 10px;
+	right: 0;
+	width: 0;
+	transition: width 0.2s;
+	background-color: white;
+}
+
+.nav-link-db:hover::after {
+	width: 100%;
+	left: 0;
+}

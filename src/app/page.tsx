@@ -1,11 +1,8 @@
 'use client';
-import { Space_Grotesk, Vast_Shadow } from 'next/font/google';
-import Head from 'next/head';
-import Image from 'next/image';
+import { Space_Grotesk } from 'next/font/google';
 import { useEffect, useState } from 'react';
-import { animate, mix, motion } from 'framer-motion';
-import { text } from 'stream/consumers';
-import { press } from 'framer-motion';
+import { animate, motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 const spaceGrotesk = Space_Grotesk({
 	weight: '300',
@@ -16,20 +13,26 @@ export default function Home() {
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 	const [cursorVariant, setCursorVariant] = useState('default');
 	const [showClickText, setShowClickText] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
+	const router = useRouter();
+
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth <= 768);
+		};
+
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+
+		return () => window.removeEventListener('resize', checkMobile);
+	}, []);
 
 	useEffect(() => {
 		const mouseMove = (e: MouseEvent) => {
-			setMousePosition({
-				x: e.clientX,
-				y: e.clientY,
-			});
+			setMousePosition({ x: e.clientX, y: e.clientY });
 		};
-
 		window.addEventListener('mousemove', mouseMove);
-
-		return () => {
-			window.removeEventListener('mousemove', mouseMove);
-		};
+		return () => window.removeEventListener('mousemove', mouseMove);
 	}, []);
 
 	const variants = {
@@ -59,122 +62,94 @@ export default function Home() {
 		},
 	};
 
-	const textEnter = () => {
-		setCursorVariant('text');
-	};
-
-	const textEnterClickable = (isClickable?: boolean) => {
-		setCursorVariant('default');
-		if (isClickable) {
-			setShowClickText(true);
-		}
-	};
-
-	const textLeave = (isClickable?: boolean) => {
-		setCursorVariant('default');
-		if (isClickable) {
-			setShowClickText(true);
-		} else {
-			setShowClickText(false);
-		}
-	};
-
+	const textEnter = () => setCursorVariant('text');
 	const textEnterSmall = (isClickable?: boolean) => {
 		setCursorVariant('textSmall');
-		if (isClickable) {
-			setShowClickText(true);
-		}
+		if (isClickable) setShowClickText(true);
+	};
+	const textEnterClickable = (isClickable?: boolean) => {
+		setCursorVariant('default');
+		if (isClickable) setShowClickText(true);
+	};
+	const textLeave = (isClickable?: boolean) => {
+		setCursorVariant('default');
+		if (!isClickable) setShowClickText(false);
 	};
 
 	return (
-		<div className="grid grid-rows-[0px_1fr_0px] items-center justify-items-center h-screen overflow-hidden bg-figma-dark-gray">
+		<div className="flex cursor-none items-center justify-items-center h-screen overflow-hidden bg-figma-dark-gray">
 			<main
-				className={`${spaceGrotesk.className} w-full flex flex-col  row-start-2 items-center sm:items-start h-full`}
+				className={`${spaceGrotesk.className} w-full flex flex-col row-start-2 items-center sm:items-start h-full`}
 			>
-				<div className="flex w-full place-content-around text-[56px] h-[50%]">
-					<div
-						onMouseEnter={() => textEnterClickable(true)}
-						onMouseLeave={() => textLeave(false)}
-						className="about-image flex justify-center items-center w-full border-r-[0.5px] border-b-[0.5px] border-r-white border-b-white"
-					>
-						<p
-							onMouseEnter={() => textEnterSmall(true)}
-							onMouseLeave={() => textLeave(true)}
+				<div className="flex flex-col flex-nowrap h-[90%] sm:flex-row w-full sm:flex-nowrap place-content-around lg:text-[56px] md:text-[30px] sm:h-[40%]">
+					{[
+						{
+							text: '(I) about.',
+							className: 'about-image',
+							route: '/about',
+						},
+						{ text: '(II) works.', className: 'works-image' },
+						{ text: '(III) contact me.', className: '' },
+					].map(({ text, className, route }, i) => (
+						<div
+							key={i}
+							onMouseEnter={() => textEnterClickable(true)}
+							onMouseLeave={() => textLeave(false)}
+							className={`flex justify-center items-center text-[16px] md:text-[32px] xl:text-[45px] w-full h-full border-b-[0.5px] border-b-white ${
+								i !== 2 ? 'border-r-[0.5px] border-r-white' : ''
+							} ${className} bg-cover bg-center`}
+							style={i === 2 ? { backgroundImage: 'url(/sprinkle.svg)' } : {}}
+							onClick={() => route && router.push(route)}
 						>
-							(I) about.
-						</p>
-					</div>
-					<div
-						onMouseEnter={() => textEnterClickable(true)}
-						onMouseLeave={() => textLeave(false)}
-						className="works-image flex w-full justify-center items-center border-r-[0.5px] border-b-[0.5px] border-r-white border-b-white"
-					>
-						<p
-							onMouseEnter={() => textEnterSmall(true)}
-							onMouseLeave={() => textLeave(true)}
-						>
-							(II) works.
-						</p>
-					</div>
-					<div
-						onMouseEnter={() => textEnterClickable(true)}
-						onMouseLeave={() => textLeave(false)}
-						className="flex w-full justify-center items-center border-b-[0.5px] border-b-white bg-[url(/sprinkle.svg)]"
-					>
-						<p
-							onMouseEnter={() => textEnterSmall(true)}
-							onMouseLeave={() => textLeave(true)}
-						>
-							(III) contact me.
-						</p>
-					</div>
+							<p
+								onMouseEnter={() => textEnterSmall(true)}
+								onMouseLeave={() => textLeave(true)}
+							>
+								{text}
+							</p>
+						</div>
+					))}
 				</div>
-				<div className="gradient-text h-[85%] flex flex-col justify-end px-[50px] tracking-[25px] text-[178px] leading-[0.95] p-[0px_55px] text-center sm:text-left text-transparent animate-gradient">
-					<div
-						onMouseEnter={textEnter}
-						onMouseLeave={() => textLeave(false)}
-						className="w-max"
-					>
-						ONE
-					</div>
-					<div
-						onMouseEnter={textEnter}
-						onMouseLeave={() => textLeave(false)}
-						className="w-max"
-					>
-						PORTFOLIO BY
-					</div>
-					<div
-						onMouseEnter={textEnter}
-						onMouseLeave={() => textLeave(false)}
-						className="w-max"
-					>
-						DIEGO BURGOS.
-					</div>
+
+				<div className="gradient-text flex flex-col justify-end  px-4 size-[-webkit-fill-available] tracking-[8px] sm:tracking-[25px] text-center sm:text-left text-transparent animate-gradient h-full sm:h-[60%]">
+					{['ONE', 'PORTFOLIO BY', 'DIEGO BURGOS.'].map((line, idx) => (
+						<div
+							key={idx}
+							onMouseEnter={textEnter}
+							onMouseLeave={() => textLeave(false)}
+							className="flex flex-col w-full text-start items-start text-[50px] leading-[1.15] xs:leading-[0.95] xs:text-[60px] sm:text-[85px] sm:tracking-[6px] md:text-[110px] md:tracking-[10px] lg:text-[120px] lg:tracking-[14px] xl:text-[145px] 2xl:text-[160px] 2xl:tracking-[25px] 3xl:text-[175px]"
+						>
+							{line}
+						</div>
+					))}
 				</div>
 			</main>
-			<motion.div
-				className="cursor"
-				variants={variants}
-				animate={cursorVariant}
-				onMouseDown={(e: { currentTarget: any }) => {
-					animate(
-						e.currentTarget,
-						{ scale: 0.1 },
-						{ type: 'spring', stiffness: 1000 }
-					);
-				}}
-				onMouseUp={(e: { currentTarget: any }) => {
-					animate(
-						e.currentTarget,
-						{ scale: 5 },
-						{ type: 'spring', stiffness: 500 }
-					);
-				}}
-			/>
-			{showClickText && (
+
+			{!isMobile && (
 				<motion.div
-					className={`${spaceGrotesk.className} cursor-text fixed pointer-events-none`}
+					className="cursor"
+					variants={variants}
+					animate={cursorVariant}
+					onMouseDown={(e) =>
+						animate(
+							e.currentTarget,
+							{ scale: 0.1 },
+							{ type: 'spring', stiffness: 1000 }
+						)
+					}
+					onMouseUp={(e) =>
+						animate(
+							e.currentTarget,
+							{ scale: 5 },
+							{ type: 'spring', stiffness: 500 }
+						)
+					}
+				/>
+			)}
+
+			{showClickText && !isMobile && (
+				<motion.div
+					className={`${spaceGrotesk.className} cursor-text pointer-events-none text-white`}
 					style={{
 						top:
 							cursorVariant === 'default'
