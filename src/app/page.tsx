@@ -89,7 +89,7 @@ export default function Home() {
 							route: '/about',
 						},
 						{ text: '(II) works.', className: 'works-image' },
-						{ text: '(III) contact me.', className: '' },
+						{ text: '(III) contact me.', className: '', route: '/contact-me' },
 					].map(({ text, className, route }, i) => (
 						<div
 							key={i}

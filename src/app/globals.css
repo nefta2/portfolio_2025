@@ -96,9 +96,10 @@ body {
 }
 
 .about-image::after {
-	background-image: url('/about-image.JPG');
+	background-image: url('/about-me.jpg');
+	background-position: 30% 70%;
 	opacity: 0;
-	filter: brightness(50%) blur(0.5px);
+	filter: brightness(50%) blur(0px);
 }
 
 .about-image:hover::before {
