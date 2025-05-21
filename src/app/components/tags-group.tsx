@@ -15,7 +15,7 @@ interface TagsGroupProps {
 
 export default function TagsGroup({ tags }: TagsGroupProps) {
 	return (
-		<div className="flex flex-row gap-3  relative">
+		<div className="flex flex-row flex-wrap gap-3  relative">
 			{tags.map((x: string, index) => {
 				return (
 					<div
