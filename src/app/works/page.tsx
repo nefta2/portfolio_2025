@@ -28,6 +28,8 @@ export default function ContactMe() {
 			tags: ['Figma', 'UI/UX'],
 			about:
 				'Green Trades was a college project in which we developed a prototype for an app that facilitates online trading of second-hand products. I was responsible for designing the login and sign-up screens.',
+			figma:
+				'https://www.figma.com/proto/hSuPPy8KKudIshyfztvqcT/Green-Trades?node-id=166-3729&t=Y1Y33G24qyN8d4jA-1',
 		},
 		{
 			name: 'One Portfolio By Diego Burgos',
@@ -36,6 +38,7 @@ export default function ContactMe() {
 			tags: ['Next.js', 'Javascript', 'Tailwind'],
 			about:
 				'I designed and developed my personal portfolio website with a focus on simplicity, clean layout, and intuitive navigation. My goal was to create a modern and distinctive design that incorporates current 2025 design trends, including subtle motion elements and interactive visuals.',
+			github: 'https://github.com/nefta2/portfolio_2025',
 		},
 	];
 	return (

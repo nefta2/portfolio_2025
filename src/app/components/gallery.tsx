@@ -31,6 +31,7 @@ interface itemProps {
 	tags: string[];
 	about?: string;
 	github?: string;
+	figma?: string;
 }
 
 interface GalleryProps {
@@ -80,12 +81,16 @@ export default function Gallery({ items }: GalleryProps) {
 							onClick={() => setIsOpen(true)}
 						>
 							{/* Gradient Overlay */}
-							<div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/100 via-black/50 to-transparent lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300"></div>
+							<div
+								className={`absolute bottom-0 opacity-100 left-0 w-full h-full bg-gradient-to-t from-black/100 via-black/50 to-transparent 
+								${isOpen ? 'opacity-100' : 'lg:opacity-0 lg:group-hover:opacity-100'} 
+								transition-opacity duration-300`}
+							></div>
 
 							{/* Slide-up Content */}
 							<div
 								className={`absolute bottom-[40px] lg:bottom-0 left-0 w-full p-6 transform transition-all duration-300 text-white
-								${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
+								${isOpen ? 'opacity-100 translate-y-0' : 'lg:opacity-0 translate-y-10'}
 								lg:group-hover:translate-y-0 lg:group-hover:opacity-100`}
 							>
 								<h1 className="font-bold text-[20px] md:text-[26px]">
@@ -104,7 +109,7 @@ export default function Gallery({ items }: GalleryProps) {
 								>
 									<FloatingFocusManager context={context} modal={true}>
 										<div
-											className={`bg-white h-full shadow-lg max-w-lg w-full transform transition-transform duration-300 ease-out ${
+											className={`h-full bg-[#1d1d1d] shadow-lg max-w-lg w-full transform transition-transform duration-300 ease-out ${
 												hasEntered
 													? 'opacity-100 translate-x-0'
 													: 'opacity-0 translate-x-100'
@@ -118,6 +123,7 @@ export default function Gallery({ items }: GalleryProps) {
 												tags={x.tags}
 												close={() => setIsOpen(false)}
 												github={x.github}
+												figma={x.figma}
 											/>
 										</div>
 									</FloatingFocusManager>
