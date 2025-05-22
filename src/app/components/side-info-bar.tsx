@@ -72,6 +72,7 @@ export default function SideInfoBar({
 								width={5}
 								height={5}
 								className="w-5 h-5"
+								priority
 							/>{' '}
 							Github
 						</span>

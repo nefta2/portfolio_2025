@@ -76,6 +76,7 @@ export default function About() {
 						alt="Me on a museum"
 						width={500}
 						height={900}
+						priority
 					/>
 				</div>
 			</div>
