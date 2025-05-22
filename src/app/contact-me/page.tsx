@@ -15,10 +15,10 @@ export default function ContactMe() {
 			<h1 className="flex flex-row items-start w-full text-[30px]">
 				Contact me.
 			</h1>
-			<h2 className="flex flex-row items-start">
-				Below you can click on any of my social media to contact me or just send
-				an email to diego240102@gmail.com
+			<h2 className="flex flex-col items-start">
+				Below you can click on any of my social media to contact me.
 			</h2>
+
 			<div className="flex flex-col gap-20 items-center align-middle lg:flex-row lg:gap-10 justify-around w-full">
 				<a href="https://github.com/nefta2" target="_blank">
 					<Image
@@ -27,6 +27,7 @@ export default function ContactMe() {
 						width={100}
 						height={25}
 						className="cursor-pointer"
+						priority
 					/>
 				</a>
 
@@ -40,6 +41,7 @@ export default function ContactMe() {
 						width={100}
 						height={25}
 						className="cursor-pointer"
+						priority
 					/>
 				</a>
 
@@ -50,6 +52,7 @@ export default function ContactMe() {
 						width={100}
 						height={25}
 						className="cursor-pointer"
+						priority
 					/>
 				</a>
 			</div>
