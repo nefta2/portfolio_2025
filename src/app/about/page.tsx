@@ -1,6 +1,7 @@
 import { Space_Grotesk } from 'next/font/google';
 import WhiteButton from '../components/white-button';
 import Timeline from '../components/timeline';
+import Image from 'next/image';
 
 const spaceGrotesk = Space_Grotesk({
 	weight: '300',
@@ -70,7 +71,7 @@ export default function About() {
 					/>
 				</div>
 				<div>
-					<img src="./about-me.jpg" alt="Me on a museum" className="w-130" />
+					<Image src="./about-me.jpg" alt="Me on a museum" className="w-130" />
 				</div>
 			</div>
 			<hr className="w-full max-w-[1000px] mx-auto border-t border-white opacity-50" />

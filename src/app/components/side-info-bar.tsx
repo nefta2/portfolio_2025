@@ -1,10 +1,8 @@
-import { button, div, nav, style } from 'motion/react-client';
 import { Space_Grotesk } from 'next/font/google';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
 import TagsGroup from './tags-group';
 import './gallery.css';
 import { ChevronLeftIcon } from '@heroicons/react/16/solid';
+import Image from 'next/image';
 
 const spaceGrotesk = Space_Grotesk({
 	weight: '400',
@@ -68,7 +66,7 @@ export default function SideInfoBar({
 					<h2>
 						<span className="text-[30px] font-bold flex flex-row gap-2 items-center">
 							{' '}
-							<img
+							<Image
 								src="github-mark-white.png"
 								alt="GitHub Logo"
 								className="w-5 h-5"

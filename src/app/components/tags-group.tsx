@@ -1,13 +1,4 @@
 'use client';
-import { button, div, nav } from 'motion/react-client';
-import { Space_Grotesk } from 'next/font/google';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-
-const spaceGrotesk = Space_Grotesk({
-	weight: '400',
-	subsets: ['latin'],
-});
 
 interface TagsGroupProps {
 	tags: string[];

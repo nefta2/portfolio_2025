@@ -1,7 +1,6 @@
 'use client';
 import { Space_Grotesk } from 'next/font/google';
-import { useRouter } from 'next/navigation';
-import WhiteButton from '../components/white-button';
+import Image from 'next/image';
 
 const spaceGrotesk = Space_Grotesk({
 	weight: '300',
@@ -22,7 +21,7 @@ export default function ContactMe() {
 			</h2>
 			<div className="flex flex-col gap-20 items-center align-middle lg:flex-row lg:gap-10 justify-around w-full">
 				<a href="https://github.com/nefta2" target="_blank">
-					<img
+					<Image
 						src="github-mark-white.png"
 						alt=""
 						className="w-25 h-25 cursor-pointer"
@@ -33,7 +32,7 @@ export default function ContactMe() {
 					href="https://linkedin.com/in/diego-nazar-burgos-álvarez-a05947210"
 					target="_blank"
 				>
-					<img
+					<Image
 						src="InBug-White.png"
 						alt=""
 						className="w-27 h-25 cursor-pointer"
@@ -41,7 +40,7 @@ export default function ContactMe() {
 				</a>
 
 				<a href="https://wa.me/50768335788" target="_blank">
-					<img
+					<Image
 						src="whats-logo.png"
 						alt=""
 						className="w-25 h-25 cursor-pointer"

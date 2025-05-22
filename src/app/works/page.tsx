@@ -1,6 +1,4 @@
 import { Space_Grotesk } from 'next/font/google';
-import { useRouter } from 'next/navigation';
-import WhiteButton from '../components/white-button';
 import Gallery from '../components/gallery';
 
 const spaceGrotesk = Space_Grotesk({

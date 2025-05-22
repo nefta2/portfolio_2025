@@ -1,13 +1,5 @@
 'use client';
-import { button, nav } from 'motion/react-client';
-import { Space_Grotesk } from 'next/font/google';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-
-const spaceGrotesk = Space_Grotesk({
-	weight: '400',
-	subsets: ['latin'],
-});
+import { useRouter } from 'next/navigation';
 
 interface WhiteButtonProps {
 	title: string;
@@ -25,7 +17,6 @@ export default function WhiteButton({
 	route,
 }: WhiteButtonProps) {
 	const router = useRouter();
-	const pathname = usePathname();
 
 	const clickButton = () => {
 		if (route) {
