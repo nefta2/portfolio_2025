@@ -74,9 +74,8 @@ export default function About() {
 					<Image
 						src="/about-me.jpg"
 						alt="Me on a museum"
-						width={130}
-						height={130}
-						className="w-130"
+						width={500}
+						height={900}
 					/>
 				</div>
 			</div>
