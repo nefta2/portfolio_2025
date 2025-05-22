@@ -71,7 +71,13 @@ export default function About() {
 					/>
 				</div>
 				<div>
-					<Image src="./about-me.jpg" alt="Me on a museum" className="w-130" />
+					<Image
+						src="/about-me.jpg"
+						alt="Me on a museum"
+						width={130}
+						height={130}
+						className="w-130"
+					/>
 				</div>
 			</div>
 			<hr className="w-full max-w-[1000px] mx-auto border-t border-white opacity-50" />

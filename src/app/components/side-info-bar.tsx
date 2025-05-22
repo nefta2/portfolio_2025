@@ -67,8 +67,10 @@ export default function SideInfoBar({
 						<span className="text-[30px] font-bold flex flex-row gap-2 items-center">
 							{' '}
 							<Image
-								src="github-mark-white.png"
+								src="/github-mark-white.png"
 								alt="GitHub Logo"
+								width={5}
+								height={5}
 								className="w-5 h-5"
 							/>{' '}
 							Github

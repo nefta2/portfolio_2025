@@ -22,9 +22,11 @@ export default function ContactMe() {
 			<div className="flex flex-col gap-20 items-center align-middle lg:flex-row lg:gap-10 justify-around w-full">
 				<a href="https://github.com/nefta2" target="_blank">
 					<Image
-						src="github-mark-white.png"
+						src="/github-mark-white.png"
 						alt=""
-						className="w-25 h-25 cursor-pointer"
+						width={100}
+						height={25}
+						className="cursor-pointer"
 					/>
 				</a>
 
@@ -33,17 +35,21 @@ export default function ContactMe() {
 					target="_blank"
 				>
 					<Image
-						src="InBug-White.png"
+						src="/InBug-White.png"
 						alt=""
-						className="w-27 h-25 cursor-pointer"
+						width={100}
+						height={25}
+						className="cursor-pointer"
 					/>
 				</a>
 
 				<a href="https://wa.me/50768335788" target="_blank">
 					<Image
-						src="whats-logo.png"
+						src="/whats-logo.png"
 						alt=""
-						className="w-25 h-25 cursor-pointer"
+						width={100}
+						height={25}
+						className="cursor-pointer"
 					/>
 				</a>
 			</div>

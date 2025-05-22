@@ -145,7 +145,7 @@ body {
 .works-image::after {
 	background-image: url('/works-image.png');
 	opacity: 0;
-	filter: brightness(50%) blur(1px);
+	filter: brightness(50%) blur(0px);
 }
 
 .works-image:hover::before {
@@ -158,6 +158,53 @@ body {
 
 /* Make sure text stays above the images */
 .works-image > * {
+	position: relative;
+	z-index: 1;
+}
+
+/* Make sure text stays above the images */
+.contact-me > * {
+	position: relative;
+	z-index: 1;
+}
+
+.contact-me {
+	position: relative;
+	overflow: hidden;
+}
+
+.contact-me::before,
+.contact-me::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-position: center;
+	background-size: cover;
+	transition: opacity 0.5s ease-out, filter 0.5s ease-out;
+	z-index: 0;
+}
+
+.contact-me::before {
+	background-image: url('/sprinkle.svg');
+	opacity: 1;
+}
+
+.contact-me::after {
+	background-image: url('/contact-me.jpeg');
+	opacity: 0;
+	filter: brightness(50%) blur(0px);
+}
+
+.contact-me:hover::before {
+	opacity: 0;
+}
+
+.contact-me:hover::after {
+	opacity: 1;
+}
+
+/* Make sure text stays above the images */
+.contact-me > * {
 	position: relative;
 	z-index: 1;
 }
