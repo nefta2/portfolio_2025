@@ -1,5 +1,4 @@
 'use client';
-import { Space_Grotesk } from 'next/font/google';
 import TagsGroup from './tags-group';
 import './gallery.css';
 import {

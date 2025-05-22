@@ -1,19 +1,6 @@
 'use client';
-import { Space_Grotesk } from 'next/font/google';
-import TagsGroup from './tags-group';
 import './gallery.css';
-import {
-	useFloating,
-	useClick,
-	useInteractions,
-	FloatingPortal,
-	FloatingOverlay,
-	FloatingFocusManager,
-	useRole,
-	useDismiss,
-} from '@floating-ui/react';
-import SideInfoBar from './side-info-bar';
-import { useEffect, useState } from 'react';
+
 import GalleryItem from './gallery-item';
 
 interface itemProps {
