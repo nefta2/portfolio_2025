@@ -1,4 +1,3 @@
-'use client';
 import { Space_Grotesk } from 'next/font/google';
 import Image from 'next/image';
 
@@ -6,7 +5,9 @@ const spaceGrotesk = Space_Grotesk({
 	weight: '300',
 	subsets: ['latin'],
 });
-
+export const metadata = {
+	title: 'Contact Me',
+};
 export default function ContactMe() {
 	return (
 		<div

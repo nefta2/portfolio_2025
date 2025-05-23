@@ -5,6 +5,9 @@ const spaceGrotesk = Space_Grotesk({
 	weight: '300',
 	subsets: ['latin'],
 });
+export const metadata = {
+	title: 'Works',
+};
 
 export default function ContactMe() {
 	const works = [
