@@ -31,7 +31,6 @@ export default function SideInfoBar({
 	return (
 		<div
 			className={`${spaceGrotesk.className} flex flex-col gap-10 top-0 right-0 h-full bg-[#1d1d1d] p-5 px-10 translate-x-0 z-50`}
-			style={{ height: 'fit-content' }}
 		>
 			<div className="flex flex-row flex-start cursor-pointer" onClick={close}>
 				<ChevronLeftIcon className="w-10 h-10" strokeWidth={1} />
@@ -80,7 +79,7 @@ export default function SideInfoBar({
 					<a
 						href={github}
 						target="_blank"
-						className="text-[#898989] hover:underline"
+						className="text-[#898989] hover:underline text-[16px] lg:text-[18px]"
 					>
 						{github}
 					</a>

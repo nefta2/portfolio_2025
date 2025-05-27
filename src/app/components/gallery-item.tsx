@@ -37,6 +37,18 @@ export default function GalleryItem({ item }: { item: itemProps }) {
 	});
 	const { getFloatingProps } = useInteractions([click, role, dismiss]);
 	const [hasEntered, setHasEntered] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
+
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth <= 768);
+		};
+
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+
+		return () => window.removeEventListener('resize', checkMobile);
+	}, []);
 
 	useEffect(() => {
 		if (isOpen) {
@@ -73,35 +85,54 @@ export default function GalleryItem({ item }: { item: itemProps }) {
 				</div>
 			</div>
 
-			<FloatingPortal>
-				{isOpen && (
-					<FloatingOverlay
-						className="fixed inset-0 bg-black/50 flex items-end justify-end z-50"
-						lockScroll
+			{!isMobile ? (
+				<FloatingPortal>
+					{isOpen && (
+						<FloatingOverlay
+							className="fixed inset-0 bg-black/50 flex items-end justify-end z-50"
+							lockScroll
+						>
+							<FloatingFocusManager context={context} modal={true}>
+								<div
+									className={`h-full bg-[#1d1d1d] shadow-lg max-w-lg w-full transform transition-transform duration-300 ease-out ${
+										hasEntered
+											? 'opacity-100 translate-x-0'
+											: 'opacity-0 translate-x-100'
+									}`}
+									{...getFloatingProps()}
+								>
+									<SideInfoBar
+										title={item.name}
+										smDescription={item.description}
+										about={item.about}
+										tags={item.tags}
+										close={() => setIsOpen(false)}
+										github={item.github}
+										figma={item.figma}
+									/>
+								</div>
+							</FloatingFocusManager>
+						</FloatingOverlay>
+					)}
+				</FloatingPortal>
+			) : (
+				isOpen && (
+					<div
+						className="fixed inset-0 bg-black bg-opacity-90  h-full flex flex-col justify-center items-center gap-8 text-2xl text-white lg:hidden transition-all z-50"
+						{...getFloatingProps()}
 					>
-						<FloatingFocusManager context={context} modal={true}>
-							<div
-								className={`h-full bg-[#1d1d1d] shadow-lg max-w-lg w-full transform transition-transform duration-300 ease-out ${
-									hasEntered
-										? 'opacity-100 translate-x-0'
-										: 'opacity-0 translate-x-100'
-								}`}
-								{...getFloatingProps()}
-							>
-								<SideInfoBar
-									title={item.name}
-									smDescription={item.description}
-									about={item.about}
-									tags={item.tags}
-									close={() => setIsOpen(false)}
-									github={item.github}
-									figma={item.figma}
-								/>
-							</div>
-						</FloatingFocusManager>
-					</FloatingOverlay>
-				)}
-			</FloatingPortal>
+						<SideInfoBar
+							title={item.name}
+							smDescription={item.description}
+							about={item.about}
+							tags={item.tags}
+							close={() => setIsOpen(false)}
+							github={item.github}
+							figma={item.figma}
+						/>
+					</div>
+				)
+			)}
 		</div>
 	);
 }
