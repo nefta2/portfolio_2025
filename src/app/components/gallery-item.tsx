@@ -1,6 +1,6 @@
 'use client';
 import TagsGroup from './tags-group';
-import './gallery.css';
+import './gallery-item.css';
 import {
 	useFloating,
 	useClick,
@@ -60,9 +60,19 @@ export default function GalleryItem({ item }: { item: itemProps }) {
 			setHasEntered(false);
 		}
 	}, [isOpen]);
+	useEffect(() => {
+		if (isOpen && isMobile) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
+		}
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, [isOpen, isMobile]);
 
 	return (
-		<div>
+		<>
 			<div
 				className="group relative w-full h-[400px] bg-cover bg-center rounded-lg overflow-hidden cursor-pointer"
 				style={{ backgroundImage: `url(/${item.bgPhoto})` }}
@@ -118,7 +128,9 @@ export default function GalleryItem({ item }: { item: itemProps }) {
 			) : (
 				isOpen && (
 					<div
-						className="fixed inset-0 bg-black bg-opacity-90  h-full flex flex-col justify-center items-center gap-8 text-2xl text-white lg:hidden transition-all z-50"
+						className={`fixed inset-0 bg-[#1d1d1d] h-screen overflow-y-auto flex flex-col justify-center items-center gap-8 text-2xl text-white lg:hidden transition-transform duration-300 ease-out z-50
+	${hasEntered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-100'}
+	pb-[env(safe-area-inset-bottom)]`}
 						{...getFloatingProps()}
 					>
 						<SideInfoBar
@@ -129,10 +141,11 @@ export default function GalleryItem({ item }: { item: itemProps }) {
 							close={() => setIsOpen(false)}
 							github={item.github}
 							figma={item.figma}
+							isMobile={isMobile}
 						/>
 					</div>
 				)
 			)}
-		</div>
+		</>
 	);
 }

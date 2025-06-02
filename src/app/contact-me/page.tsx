@@ -21,7 +21,11 @@ export default function ContactMe() {
 			</h2>
 
 			<div className="flex flex-col gap-20 items-center align-middle lg:flex-row lg:gap-10 justify-around w-full">
-				<a href="https://github.com/nefta2" target="_blank">
+				<a
+					href="https://github.com/nefta2"
+					target="_blank"
+					className="flex flex-col items-center gap-5"
+				>
 					<Image
 						src="/github-mark-white.png"
 						alt=""
@@ -30,11 +34,13 @@ export default function ContactMe() {
 						className="cursor-pointer"
 						priority
 					/>
+					<h1>Github</h1>
 				</a>
 
 				<a
 					href="https://linkedin.com/in/diego-nazar-burgos-álvarez-a05947210"
 					target="_blank"
+					className="flex flex-col items-center gap-5"
 				>
 					<Image
 						src="/InBug-White.png"
@@ -44,9 +50,14 @@ export default function ContactMe() {
 						className="cursor-pointer"
 						priority
 					/>
+					<h1>Linkedin</h1>
 				</a>
 
-				<a href="https://wa.me/50768335788" target="_blank">
+				<a
+					href="https://wa.me/50768335788"
+					target="_blank"
+					className="flex flex-col items-center gap-5"
+				>
 					<Image
 						src="/whats-logo.png"
 						alt=""
@@ -55,6 +66,7 @@ export default function ContactMe() {
 						className="cursor-pointer"
 						priority
 					/>
+					<h1>Whatsapp</h1>
 				</a>
 			</div>
 		</div>

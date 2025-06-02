@@ -1,8 +1,10 @@
+'use client';
 import { Space_Grotesk } from 'next/font/google';
 import TagsGroup from './tags-group';
 import './gallery.css';
-import { ChevronLeftIcon } from '@heroicons/react/16/solid';
+import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/16/solid';
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 
 const spaceGrotesk = Space_Grotesk({
 	weight: '400',
@@ -17,6 +19,7 @@ interface SideInfoBar {
 	github?: string;
 	close?: () => void;
 	figma?: string;
+	isMobile?: boolean;
 }
 
 export default function SideInfoBar({
@@ -27,13 +30,55 @@ export default function SideInfoBar({
 	close,
 	github,
 	figma,
+	isMobile,
 }: SideInfoBar) {
+	const sideBarRef = useRef<HTMLDivElement>(null);
+	useEffect(() => {
+		if (!isMobile || !close) return;
+
+		let touchStartY = 0;
+
+		const handleTouchStart = (e: TouchEvent) => {
+			touchStartY = e.touches[0].clientY;
+		};
+
+		const handleTouchMove = (e: TouchEvent) => {
+			const touchEndY = e.touches[0].clientY;
+			const deltaY = touchEndY - touchStartY;
+
+			const sidebar = sideBarRef.current;
+			if (!sidebar) return;
+
+			if (sidebar.scrollTop === 0 && deltaY > 50) {
+				close();
+			}
+		};
+
+		const sidebar = sideBarRef.current;
+		if (sidebar) {
+			sidebar.addEventListener('touchstart', handleTouchStart);
+			sidebar.addEventListener('touchmove', handleTouchMove);
+		}
+
+		return () => {
+			if (sidebar) {
+				sidebar.removeEventListener('touchstart', handleTouchStart);
+				sidebar.removeEventListener('touchmove', handleTouchMove);
+			}
+		};
+	}, [isMobile, close]);
+
 	return (
 		<div
-			className={`${spaceGrotesk.className} flex flex-col gap-10 top-0 right-0 h-full bg-[#1d1d1d] p-5 px-10 translate-x-0 z-50`}
+			ref={sideBarRef}
+			className={`${spaceGrotesk.className} overscroll-contain flex flex-col gap-10 top-0 max-h-full overflow-y-auto right-0 h-full pb-40  p-5 px-10 translate-x-0 z-50`}
 		>
 			<div className="flex flex-row flex-start cursor-pointer" onClick={close}>
-				<ChevronLeftIcon className="w-10 h-10" strokeWidth={1} />
+				{isMobile ? (
+					<ChevronDownIcon className="w-10 h-10" strokeWidth={1} />
+				) : (
+					<ChevronLeftIcon className="w-10 h-10" strokeWidth={1} />
+				)}
 			</div>
 			<div className="flex flex-col gap-2">
 				<h1>
@@ -110,7 +155,7 @@ export default function SideInfoBar({
 					<a
 						href={figma}
 						target="_blank"
-						className="text-[#898989] hover:underline"
+						className="text-[#898989] hover:underline  text-[16px] lg:text-[18px]"
 					>
 						Click here to check design
 					</a>

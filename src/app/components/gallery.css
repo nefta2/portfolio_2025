@@ -2,3 +2,6 @@
 	content: '';
 	display: none;
 }
+.overscroll-contain {
+	overscroll-behavior-y: contain;
+}
